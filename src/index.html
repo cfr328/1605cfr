@@ -5,98 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        th{
+            text-align:center;
+        }
+    </style>
 </head>
 <body>
-    <div class="wrap">
-        <div class="banner">
-            <ul>
-                <li>
-                    <img src="img/1.jpg" alt="">
-                </li>
-                <li>
-                    <img src="img/2.jpg" alt="">
-                </li>
-                <li>
-                    <img src="img/3.jpg" alt="">
-                </li>
-                <li>
-                    <img src="img/4.jpg" alt="">
-                </li>
-            </ul>
-            <ol class="pagination">
-                <li class="active">1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-            </ol>
-            <span class="left">prev</span>
-		    <span class="right">next</span>
-        </div>
-        
+    <div class="container-fluid col-xs-6 col-xs-offset-3">
+        <form>
+            <div class="form-group"> 
+                <label>姓名</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>学号</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group"> 
+                <label>成绩</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group text-center">
+                <button type="button" class="btn btn-success btn-sm" id="sub">提交</button>
+            </div>
+        </form>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>姓名</th>
+                    <th>成绩</th>
+                    <th>学号</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="content"></tbody>
+        </table>
     </div>
-    <script src="js/libs/require.js" defer="true", async data-main="js/main" ></script>
-    <script>    
-        var Ul = document.querySelector("ul");
-		var Ol = document.querySelector("ol");
-		var Ban = document.querySelector(".banner");
-		var oLeft = document.querySelector(".left");
-		var oRight = document.querySelector(".right");
-		var uLis = Ul.children;
-		var oLis = Ol.children;
-		lunbo()
-		function lunbo() {
-			var n = 0;
-			var timer = null;
-			autoPlay();
-			Ban.onmouseover = function(){
-				clearInterval(timer);
-			};
-			Ban.onmouseout = function(){
-				autoPlay();
-			};
-			for(var i=0;i<oLis.length;i++){
-				(function(m){
-					oLis[m].onclick = function(){
-						n = m;
-						tab();
-					};
-				})(i);
-			}
-			//点击切换至下一张
-			oRight.onclick = function(){
-				n++;
-				if(n>uLis.length-1){
-					n = 0;
-				}
-				tab();
-			};
-			//点击切换至上一张
-			oLeft.onclick = function(){
-				n--;
-				if(n<0){
-					n = uLis.length-1;
-				}
-				tab();
-			};
-			function tab(){
-				for(var j=0;j<oLis.length;j++){
-					oLis[j].className = "";
-				}
-				Ul.style.left = -n*500+"px";
-				oLis[n].className = "active";
-			}
-			function autoPlay(){
-				timer = setInterval(function(){
-					n++;
-					if(n>uLis.length-1){
-						n = 0;
-					}
-					tab();
-				},1000);
-			}
-		}
-		
+    <script type="text/x-handlebars-template" class="text"> 
+        {{#each users}}     
+        <tr>
+            <td class="id">{{@index}}</td>
+            <td>{{user}}</td>
+            <td>{{grade}}</td>
+            <td>{{num}}</td>
+            <td><button class="del">删除</button></td>
+        </tr>
+        {{/each}}  
+    </script>
+    <script src="js/libs/handlebars.min.js"></script>
+    <script src="js/libs/jquery.min.js"></script>
+    <script src="js/libs/require.js" data-main="js/main.js" defer="true" async></script> 
+    <script>
+        // var text = document.querySelector('.text');
+        // var html = text.innerHTML;
+        // var cont = Handlebars.compile(html);
+        // var control = document.querySelectorAll('.form-control');
+        // var local = window.localStorage;
+        // var data = {
+        //     users: []
+        // }
+        // var arr = [];
+        // if (local.getItem('key')){
+        //     arr=JSON.parse(local.getItem('key')) 
+        //     data.users = arr;
+        //     content.innerHTML = cont(data)       
+        // }
+        
+        // sub.onclick = function () { // 提交数据显示到下文
+        //     var user = control[0].value;
+        //     var num = control[1].value;
+        //     var grade = control[2].value;
+        //     data.users.push({
+        //         user: user,
+        //         num:num,
+        //         grade:grade
+        //     })
+        //     local.setItem('key', JSON.stringify(data.users));  
+        //     content.innerHTML = cont(data)
+                                
+        // }
+        $('tbody').on('click', '.del', function () {
+            $(this).parents('tr').remove();
+            data.users.splice($(this).parents('tr').find('.id')*1, 1)
+        })
     </script>
 </body>
 </html>

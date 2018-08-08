@@ -1,12 +1,7 @@
 require.config({
     baseUrl: './js/',
     paths: {
-        'ajax': './app/ajax',
-        'index': './app/index',
-        'render': './common/render'
+        localS: 'app/localS'
     }
 })
-require(['ajax', 'render'], function (ajax, render) {
-    ajax('/api/index')
-    console.log(render)
-})
+require(['localS'])
