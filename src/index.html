@@ -100,7 +100,7 @@
         // }
         $('tbody').on('click', '.del', function () {
             $(this).parents('tr').remove();
-            data.users.splice($(this).parents('tr').find('.id')*1, 1)
+            data.users.splice($(this).parents('tr').find('td')*1, 1)
         })
     </script>
 </body>
